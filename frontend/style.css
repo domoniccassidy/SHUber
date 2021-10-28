@@ -24,8 +24,9 @@
 }
 
 .logo{
+    margin-left: 480px;
     color: #fff;
-    font-size: 35px;
+    font-size: 45px;
     font-family: Arial;
     padding-left: 20px;
     float: left;
@@ -273,7 +274,5 @@ ul li a:hover{
 .icon ion-icon:hover{
     color: #ff7200;
 }
-
-
 
 
