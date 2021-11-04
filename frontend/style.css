@@ -275,6 +275,9 @@ ul li a:hover{
     color: #ff7200;
 }
 
+.alertContainer {
+    height: 180px;
+}
 
 @media screen and (max-width: 500px) {  
     
