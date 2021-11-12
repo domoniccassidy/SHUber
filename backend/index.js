@@ -1,4 +1,4 @@
-import express,{urlencoded} from "express";
+import express,{urlencoded,json} from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors"
@@ -9,6 +9,7 @@ const app = express();
 
 dotenv.config();
 
+app.use(json({limit:"30mb",extended:true}))
 app.use(urlencoded({limit:"30mb",extended:true}))
 app.use(cors());
 

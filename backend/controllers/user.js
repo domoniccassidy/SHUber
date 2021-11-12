@@ -1,12 +1,15 @@
-import mongoose from "mongoose"
 import UserProfile from "../models/userModel.js"
 
 export const logIn = async (req,res)=>{
 
     const {username,password} = req.body;
+    console.log(req.body);
     try {
-      
     const existingUser = await UserProfile.findOne({username});
+    
+    if(!existingUser){
+        return res.status(404).json({message:"User not found"})
+    }
     const isPasswordCorrect = existingUser.password == password
 
     if(!isPasswordCorrect){
@@ -15,7 +18,7 @@ export const logIn = async (req,res)=>{
     res.status(200).json({user: existingUser})
 
     } catch (error) {
-        res.json({message:error.message})
+        res.status(500).json({message:error.message})
     }
     
 }
