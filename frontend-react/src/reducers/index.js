@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import drivers from "./drivers";
-import users from "./users"
+import user from "./users";
+import errors from "./errors";
 
-export default combineReducers({drivers,users})
+export default combineReducers({ drivers, user, errors });

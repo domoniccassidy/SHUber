@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
 const Main = () => {
-    return (
-        <div>
-            You are now in main
-        </div>
-    )
-}
+  const user = JSON.parse(localStorage.getItem("user")).user;
+  console.log(user);
+  return <div>Hello {user.username}</div>;
+};
 
-export default Main
+export default Main;
