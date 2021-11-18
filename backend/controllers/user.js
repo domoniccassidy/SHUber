@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import UserProfile from "../models/userModel.js";
 
 export const logIn = async (req, res) => {
@@ -45,14 +46,30 @@ export const signup = async (req, res) => {
   }
 };
 
-export const addUser = async (req, res) => {
-  const user = req.body;
-  const newUser = new UserProfile(user);
+export const verifyCard = async (req, res) => {
+  const { id: _id } = req.params;
 
-  try {
-    await newUser.save();
-    res.json(newUser);
-  } catch (error) {
-    res.json({ message: error.message });
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.send("No user with that id");
   }
+
+  const updatedUser = await UserProfile.findByIdAndUpdate(
+    _id,
+    { cardVerified: true },
+    {
+      new: true,
+    }
+  );
+  res.json(updatedUser);
+};
+
+export const verifyEmail = async (req, res) => {
+  const { id } = req.params;
+
+  const updatedUser = await UserProfile.findOneAndUpdate(
+    id,
+    { emailVerified: true },
+    { new: true }
+  );
+  res.json(updatedUser);
 };

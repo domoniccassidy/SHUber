@@ -2,7 +2,21 @@
   margin: 0;
   padding: 0;
 }
-
+.onScreen {
+  transition: all 0.5s;
+  transform: translate3d(0, 0, 0);
+  height: 100vh;
+  background-color: #fff;
+  width: 50%;
+  position: absolute;
+  z-index: 1;
+  background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.5) 50%
+    ),
+    url(./images/dario-mueller-t1zhY3FqVWM-unsplash.jpg);
+}
 .main {
   width: 100%;
   background: linear-gradient(
@@ -17,11 +31,26 @@
 }
 
 .navbar {
+  display: flex;
   width: 1200px;
   height: 75px;
   margin: auto;
 }
-
+.menu {
+  transition: all 0.5s;
+  transform: translate3d(-100%, 0, 0);
+  height: 100vh;
+  background-color: #fff;
+  width: 50%;
+  position: absolute;
+  z-index: 1;
+  background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.5) 50%
+    ),
+    url(./images/dario-mueller-t1zhY3FqVWM-unsplash.jpg);
+}
 .icon {
   width: 200px;
   float: left;
@@ -29,33 +58,31 @@
 }
 
 .logo {
+  width: 100%;
   margin-left: 480px;
   color: #fff;
-  font-size: 45px;
+  font-size: 6vh;
   font-family: Arial;
-  padding-left: 20px;
   float: left;
   padding-top: 10px;
 }
 
-.menu {
-  width: 400px;
-  float: left;
-  height: 70px;
-}
-
 ul {
+  width: 100%;
   float: left;
-  display: flex;
   justify-content: center;
+  text-align: center;
   align-items: center;
 }
 
 ul li {
+  display: block;
+  padding: 10px 0px;
   list-style: none;
-  margin-left: 62px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
   margin-top: 27px;
-  font-size: 14px;
+  font-size: 2.3vh;
 }
 
 ul li a {
@@ -285,7 +312,23 @@ ul li a:hover {
   font-family: Arial, Helvetica, sans-serif;
   color: #ff7200;
 }
-
+.orange {
+  color: #ff7200;
+}
+.miniLogo {
+  width: 100%;
+  text-align: center;
+  font-size: 4vh;
+  font-family: Arial;
+  float: left;
+  padding-top: 10px;
+}
+.settings {
+  display: block;
+}
+li {
+  font-size: 2.5vh;
+}
 @media screen and (max-width: 500px) {
   .main {
     min-height: 100vh;
