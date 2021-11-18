@@ -43,7 +43,7 @@
   background-color: #fff;
   width: 50%;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   background: linear-gradient(
       to top,
       rgba(0, 0, 0, 0.5) 50%,
@@ -76,6 +76,8 @@ ul {
 }
 
 ul li {
+  font-family: Arial;
+  color: #fff;
   display: block;
   padding: 10px 0px;
   list-style: none;
@@ -118,7 +120,30 @@ ul li a:hover {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
+div.map.leaflet-container.leaflet-touch.leaflet-retina.leaflet-fade-anim {
+  /*border: 5px solid red;*/
+  z-index: 1;
+}
 
+div.slide-pane__content {
+  /*border: 5px solid black;*/
+  z-index: 100;
+}
+
+div.ReactModal__Content.ReactModal__Content--after-open.slide-pane.slide-pane_from_right.some-custom-class {
+  /*border: 5px solid orange;*/
+  z-index: 100;
+}
+
+div.slide-pane__header {
+  /*border: 5px solid orange;*/
+  z-index: 100;
+}
+
+div.ReactModal__Overlay.ReactModal__Overlay--after-open.slide-pane__overlay.some-custom-overlay-class {
+  /*border: 5px solid blue;*/
+  z-index: 100;
+}
 .btn {
   width: 100px;
   height: 40px;
@@ -328,6 +353,27 @@ ul li a:hover {
 }
 li {
   font-size: 2.5vh;
+}
+.locationContainer {
+  height: 180px;
+}
+.map {
+  color: pink;
+  height: 360px;
+  width: 360px;
+}
+.askTaxi {
+  text-align: center;
+  margin: 3vh 0px;
+}
+.taxiButton {
+  font-family: Arial;
+  color: #ff7200;
+  font-size: 2em;
+  background-color: #fff;
+  border-color: #fff;
+  padding: 2vh;
+  border-radius: 5px;
 }
 @media screen and (max-width: 500px) {
   .main {

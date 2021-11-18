@@ -9,12 +9,19 @@ const initForm = {
 };
 
 const Index = () => {
+  const user = JSON.parse(localStorage.getItem("user"))?.user;
   const [userData, setUserData] = useState(initForm);
   const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const error = useSelector((state) => state.errors);
+
+  useEffect(() => {
+    if (user) {
+      history.push("/main");
+    }
+  }, []);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
