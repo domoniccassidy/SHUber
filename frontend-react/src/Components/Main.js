@@ -10,6 +10,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 const Main = () => {
   const [onScreen, setOnScreen] = useState(false);
   const [location, setLocation] = useState([0, 0]);
+  const[bookingStatus,setBookingStatus] = useState("before");
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user"))?.user
   );
@@ -51,8 +52,8 @@ const Main = () => {
       ...drivers,
       {
         location: [
-          position.coords.latitude + 0.0005,
-          position.coords.longitude + 0.0005,
+          position.coords.latitude + 0.0010,
+          position.coords.longitude + 0.0010,
         ],
         name: "Barry",
       },
@@ -89,7 +90,8 @@ const Main = () => {
         </div>
         <div className="container">
           <div className="askTaxi">
-            <button className="taxiButton">Book a taxi</button>
+            {bookingStatus == "before" && <button className="taxiButton" onClick= {() => setBookingStatus("wait")}>Book a taxi</button>}
+            {bookingStatus == "wait" && <h2>Taxi is on its way</h2>  }
           </div>
           <MapContainer
             style={{
