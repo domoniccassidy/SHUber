@@ -6,6 +6,7 @@ import Home from "./Components/Home";
 import Main from "./Components/Main";
 import Payment from "./Components/Payment";
 import { getDrivers } from "./actions/drivers";
+import Driver from "./Components/Driver";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/" exact component={Home} />
         <Route path="/main" exact component={Main} />
         <Route path="/payment" exact component={Payment} />
+        <Route path="/driver" component={Driver} />
       </Switch>
     </BrowserRouter>
   );

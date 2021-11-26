@@ -366,6 +366,7 @@ li {
 .askTaxi {
   text-align: center;
   margin: 3vh 0px;
+  height: 22vh;
 }
 .taxiButton {
   margin: 5vh;
@@ -379,8 +380,19 @@ li {
 }
 .taxiInfo {
   color: #ff7200;
+  padding-top: 6vh;
   font-size: 4vh;
   font-family: Arial, Helvetica, sans-serif;
+}
+.driverPhoto {
+  height: 16vh;
+}
+.imageContainer {
+  text-align: center;
+  margin-top: 12vh;
+}
+.check {
+  color: orange;
 }
 @media screen and (max-width: 500px) {
   .main {

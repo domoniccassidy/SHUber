@@ -44,6 +44,18 @@ const Main = () => {
       setError("");
     }
   };
+  const taxiIsHere = () => {
+    setBookingStatus("here");
+    const newDrivers = drivers;
+    newDrivers[0].location = [location[0] + 0.0007, location[1] + 0.0007];
+    setLocation([...location, location[0] + 0.00000000000001]);
+  };
+  const tripIsOver = () => {
+    setBookingStatus("there");
+    drivers[0].location = [destination.lat + 0.0005, destination.lng + 0.0005];
+    setLocation([destination.lat, destination.lng]);
+    setDestination([0, 0]);
+  };
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -51,6 +63,14 @@ const Main = () => {
     } else {
     }
   }, []);
+
+  useEffect(() => {
+    if (bookingStatus == "wait") {
+      setTimeout(taxiIsHere, 4000);
+    } else if (bookingStatus == "here") {
+      setTimeout(tripIsOver, 4000);
+    }
+  }, [bookingStatus]);
   useEffect(() => {
     if (!user) {
       history.push("/");
@@ -65,16 +85,6 @@ const Main = () => {
   };
   const AskPosition = (position) => {
     setLocation([position.coords.latitude, position.coords.longitude]);
-    setDrivers([
-      ...drivers,
-      {
-        location: [
-          position.coords.latitude + 0.001,
-          position.coords.longitude + 0.001,
-        ],
-        name: "Barry",
-      },
-    ]);
   };
   const SetViewOnClick = () => {
     const map = useMap();
@@ -114,15 +124,25 @@ const Main = () => {
             {bookingStatus == "wait" && (
               <h2 className="taxiInfo">Taxi is on its way</h2>
             )}
+            {bookingStatus == "here" && (
+              <h2 className="taxiInfo">
+                You are now heading to your destination
+              </h2>
+            )}
+            {bookingStatus == "there" && (
+              <h2 className="taxiInfo">
+                You have arrived at your destination, thanks for using Shuber
+              </h2>
+            )}
+            {error != "" && (
+              <p className="errorMessage" style={{ marginBottom: "1vh" }}>
+                {error}
+              </p>
+            )}
           </div>
-          {error != "" && (
-            <p className="errorMessage" style={{ marginBottom: "1vh" }}>
-              {error}
-            </p>
-          )}
+
           <MapContainer
             whenReady={(map) => {
-              console.log(map);
               map.target.on("click", function (e) {
                 chooseDestination(e);
               });
@@ -152,7 +172,9 @@ const Main = () => {
               drivers.map((driver) => {
                 return (
                   <Marker position={driver.location} icon={taxiIcon}>
-                    <Popup offset={[0, -15]}>{driver.name}</Popup>
+                    <Popup offset={[0, -15]}>
+                      <a>{driver.name}</a>
+                    </Popup>
                   </Marker>
                 );
               })}
