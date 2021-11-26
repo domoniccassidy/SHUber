@@ -7,6 +7,7 @@
 // https://leafletjs.com/examples/quick-start/
 // https://leafletjs.com/examples/custom-icons/
 // Copyright notice - https://www.openstreetmap.org/copyright
+// https://www.liedman.net/leaflet-routing-machine/tutorials/basic-usage/
 
 // Key used for ITSE Group Project - Provided through Mapbox
 const key = 'pk.eyJ1Ijoia2llcmFueWVzIiwiYSI6ImNrdzI4bjZvejA3djMzMXFseGpjaXRhcHMifQ.oNgLKm04eGOq4gRmlrpOAA';
@@ -23,7 +24,9 @@ const taxiIcon = L.icon({
     popupAnchor: [-15, -32] // point from which the popup should open relative to the iconAnchor
 });
 
+//
 // Function called upon successfully receiving user location
+//
 function success(position) {
     lat = position.coords.latitude;
     long = position.coords.longitude;
@@ -36,6 +39,9 @@ function success(position) {
 
     // Updating the map to show the drivers location
     plotDriverLocation(lat, long);
+
+    // !! For now just passing default values but connect this up later !!
+    plotRoute(53.3784, -1.4543, 53.4064, -1.4217);
 }
 
 // Function called upon failure to get user location
@@ -86,7 +92,27 @@ function plotUserLocation(lat, long) {
 
 function plotDriverLocation(lat, long) {
     // Plot the driver's location on the map
-    driverMarker = L.marker([lat+0.005, long+0.005], { icon: taxiIcon }).addTo(shuberMap).bindPopup("Your driver's current location.");
+    driverMarker = L.marker([lat+0.0010, long+0.0010], { icon: taxiIcon }).addTo(shuberMap).bindPopup("Your driver's current location.");
+}
+
+function plotRoute(startLat, startLong, endLat, endLong) {
+
+    // We are using mapbox for the routing service API
+    // Make read-only route so that the user cannot edit it in anyway
+    L.Routing.control({
+        waypoints: [
+            L.latLng(startLat, startLong),
+            L.latLng(endLat, endLong)
+        ],
+        router: L.Routing.mapbox(key),
+        fitSelectedRoutes: true,
+        draggableWaypoints: false,
+        routeWhileDragging: false,
+        lineOptions : {
+            addWaypoints: false
+        }
+    }).addTo(shuberMap);
+    
 }
 
 //

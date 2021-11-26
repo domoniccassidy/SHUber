@@ -1,7 +1,2 @@
-#locationContainer {
-  height: 180px;
-}
-#map {
-  height: 360px;
-  width: 360px;
-}
+#locationContainer { height: 180px; }
+#map { height: 620px; width: 620px; }
