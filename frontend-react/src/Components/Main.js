@@ -4,16 +4,15 @@ import { FiSettings } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import L from "leaflet";
-
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 
 const Main = () => {
   const [onScreen, setOnScreen] = useState(false);
   const [location, setLocation] = useState([0, 0]);
-  const[bookingStatus,setBookingStatus] = useState("before");
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user"))?.user
-  );
+  const [bookingStatus, setBookingStatus] = useState("before");
+  const [error, setError] = useState("");
+  const [destination, setDestination] = useState();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   const [drivers, setDrivers] = useState(
     JSON.parse(localStorage.getItem("drivers"))
@@ -24,16 +23,27 @@ const Main = () => {
 
   const icon = L.icon({ iconUrl: "/marker-icon.png", iconSize: [24, 41] });
 
+  const icon2 = L.icon({
+    iconUrl: "/destination-icon.png",
+    iconSize: [24, 41],
+  });
+
   const taxiIcon = L.icon({
     iconUrl: "/taxiIcon.png",
     iconSize: [24, 24],
   });
-
-  useEffect(() => {
-    if (!user) {
-      history.push("/");
+  const chooseDestination = (e) => {
+    setDestination(e.latlng);
+  };
+  const bookTaxi = () => {
+    if (!destination) setError("You need to choose a destination to travel to");
+    else if (user?.cardVerified == false)
+      setError("Please provide your payment details before booking");
+    else {
+      setBookingStatus("wait");
+      setError("");
     }
-  }, [user]);
+  };
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -41,7 +51,14 @@ const Main = () => {
     } else {
     }
   }, []);
-
+  useEffect(() => {
+    if (!user) {
+      history.push("/");
+    }
+  }, [user]);
+  const payment = () => {
+    history.push("/payment");
+  };
   const logout = () => {
     setUser(null);
     dispatch({ type: "LOGOUT" });
@@ -52,8 +69,8 @@ const Main = () => {
       ...drivers,
       {
         location: [
-          position.coords.latitude + 0.0010,
-          position.coords.longitude + 0.0010,
+          position.coords.latitude + 0.001,
+          position.coords.longitude + 0.001,
         ],
         name: "Barry",
       },
@@ -72,8 +89,7 @@ const Main = () => {
         <h2 className="miniLogo orange">{user?.username}</h2>
         <ul className="settings">
           <li>Home</li>
-          <li>Theme</li>
-          <li>Payment</li>
+          <li onClick={payment}>Payment</li>
           <li>Account</li>
 
           <li onClick={logout}>Log Out</li>
@@ -90,10 +106,27 @@ const Main = () => {
         </div>
         <div className="container">
           <div className="askTaxi">
-            {bookingStatus == "before" && <button className="taxiButton" onClick= {() => setBookingStatus("wait")}>Book a taxi</button>}
-            {bookingStatus == "wait" && <h2>Taxi is on its way</h2>  }
+            {bookingStatus == "before" && (
+              <button className="taxiButton" onClick={bookTaxi}>
+                Book a taxi
+              </button>
+            )}
+            {bookingStatus == "wait" && (
+              <h2 className="taxiInfo">Taxi is on its way</h2>
+            )}
           </div>
+          {error != "" && (
+            <p className="errorMessage" style={{ marginBottom: "1vh" }}>
+              {error}
+            </p>
+          )}
           <MapContainer
+            whenReady={(map) => {
+              console.log(map);
+              map.target.on("click", function (e) {
+                chooseDestination(e);
+              });
+            }}
             style={{
               height: "30vh",
               width: "90%",
@@ -112,7 +145,9 @@ const Main = () => {
             <Marker position={location} icon={icon}>
               <Popup offset={[0, -15]}>Your current location</Popup>
             </Marker>
-
+            {destination && (
+              <Marker position={destination} icon={icon2}></Marker>
+            )}
             {drivers &&
               drivers.map((driver) => {
                 return (

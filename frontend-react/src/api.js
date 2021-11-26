@@ -7,3 +7,5 @@ export const getDrivers = () => api.get("/drivers");
 export const signIn = (userData) => api.post("users/signin", userData);
 
 export const signUp = (userData) => api.post("users/signup", userData);
+
+export const verifyCard = (id) => api.put(`users//verify/${id}`);

@@ -3,7 +3,7 @@ import * as api from "../api";
 export const signIn = (userData, history) => async (dispatch) => {
   try {
     const { data } = await api.signIn(userData);
-    dispatch({ type: "AUTH", data });
+    dispatch({ type: "AUTH", data: data.user });
     history.push("main");
   } catch (error) {
     if (userData.username == "" || userData.password == "") {
@@ -18,7 +18,7 @@ export const signIn = (userData, history) => async (dispatch) => {
 export const signUp = (userData, history) => async (dispatch) => {
   try {
     const { data } = await api.signUp(userData);
-    dispatch({ type: "AUTH", data });
+    dispatch({ type: "AUTH", data: data.user });
     history.push("main");
   } catch (error) {
     if (
@@ -32,4 +32,9 @@ export const signUp = (userData, history) => async (dispatch) => {
       dispatch({ type: "PASSWORDS_NOT_MATCHING" });
     }
   }
+};
+export const verifyCard = (user,history) => async (dispatch) => {
+  const { data } = await api.verifyCard(user._id);
+  dispatch({ type: "AUTH", data });
+  history.push("main")
 };
