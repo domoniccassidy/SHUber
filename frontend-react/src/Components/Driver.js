@@ -65,11 +65,29 @@ const Driver = () => {
             alt={`${driver.name}'s profile picture`}
           />
         </div>
-        <AiFillStar className={rating > 0 && "check"} />
-        <AiFillStar className={rating > 1 && "check"} />
-        <AiFillStar className={rating > 2 && "check"} />
-        <AiFillStar className={rating > 3 && "check"} />
-        <AiFillStar className={rating > 4 && "check"} />
+        <div className="review">
+          {" "}
+          <AiFillStar
+            onClick={() => setRating(1)}
+            className={rating > 0 && "check"}
+          />
+          <AiFillStar
+            onClick={() => setRating(2)}
+            className={rating > 1 && "check"}
+          />
+          <AiFillStar
+            onClick={() => setRating(3)}
+            className={rating > 2 && "check"}
+          />
+          <AiFillStar
+            onClick={() => setRating(4)}
+            className={rating > 3 && "check"}
+          />
+          <AiFillStar
+            onClick={() => setRating(5)}
+            className={rating > 4 && "check"}
+          />
+        </div>
       </div>
     </>
   );

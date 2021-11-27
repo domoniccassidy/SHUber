@@ -394,6 +394,9 @@ li {
 .check {
   color: orange;
 }
+.review {
+  text-align: center;
+}
 @media screen and (max-width: 500px) {
   .main {
     min-height: 100vh;

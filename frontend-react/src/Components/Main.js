@@ -5,6 +5,8 @@ import { ImCross } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { createControlComponent } from "@react-leaflet/core";
+import "leaflet-routing-machine";
 
 const Main = () => {
   const [onScreen, setOnScreen] = useState(false);
@@ -130,9 +132,25 @@ const Main = () => {
               </h2>
             )}
             {bookingStatus == "there" && (
-              <h2 className="taxiInfo">
-                You have arrived at your destination, thanks for using Shuber
-              </h2>
+              <>
+                {" "}
+                <h2 className="taxiInfo">
+                  You have arrived at your destination, thanks for using Shuber
+                </h2>
+                <p style={{ fontFamily: "arial", color: "white" }}>
+                  If you're feeling nice, why not give the driver a{" "}
+                  <span
+                    style={{
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                      color: "#6495ED",
+                    }}
+                    onClick={() => history.push("/driver")}
+                  >
+                    review?
+                  </span>
+                </p>
+              </>
             )}
             {error != "" && (
               <p className="errorMessage" style={{ marginBottom: "1vh" }}>
