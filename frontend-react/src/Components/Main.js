@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { FiSettings } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { createControlComponent } from "@react-leaflet/core";
 import "leaflet-routing-machine";
-
+import { MiniPayment } from "./Payment";
 const Main = () => {
   const [onScreen, setOnScreen] = useState(false);
   const [location, setLocation] = useState([0, 0]);
@@ -18,6 +18,8 @@ const Main = () => {
   const [drivers, setDrivers] = useState(
     JSON.parse(localStorage.getItem("drivers"))
   );
+
+  const cardError = useSelector((state) => state.errors);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -221,6 +223,9 @@ const Main = () => {
             <Routing />
           </MapContainer>
         </div>
+        {cardError === "Please provide your payment details before booking" && (
+          <MiniPayment />
+        )}
       </div>
     </>
   );

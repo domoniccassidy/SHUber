@@ -10,6 +10,8 @@ export default (error = "", action) => {
       return "You have entered an incorrect password";
     case "PASSWORDS_NOT_MATCHING":
       return "Your passwords do not match ";
+    case "CLEAR":
+      return "";
     default:
       return error;
   }

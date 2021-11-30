@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import Main from "./Components/Main";
-import Payment from "./Components/Payment";
+import { Payment } from "./Components/Payment";
 import { getDrivers } from "./actions/drivers";
 import Driver from "./Components/Driver";
 
