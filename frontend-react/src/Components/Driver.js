@@ -2,18 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { FiSettings } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AiFillStar } from "react-icons/ai";
+import { reviewDriver } from "../actions/drivers";
 
 const Driver = () => {
-  const driver = JSON.parse(localStorage.getItem("drivers"))[0];
+  const [driver, setDriver] = useState(
+    JSON.parse(localStorage.getItem("drivers"))[0]
+  );
   const [rating, setRating] = useState(() => {
-    var amount = 0;
+    let amount = Number(0);
     driver.rating.map((rate) => {
-      amount += rate[1];
+      amount += Number(rate[1]);
     });
+
     return amount / driver.rating.length;
   });
+
   const [onScreen, setOnScreen] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
@@ -29,6 +34,10 @@ const Driver = () => {
   const logout = () => {
     setUser(null);
     dispatch({ type: "LOGOUT" });
+  };
+  const review = (rating) => {
+    setRating(rating);
+    dispatch(reviewDriver(driver._id, { ...user, rating: rating }));
   };
   useEffect(() => {
     if (!user) {
@@ -58,7 +67,9 @@ const Driver = () => {
           />
           <h2 className="logo">{driver.name}'s Profile</h2>
         </div>
-        <div className="imageContainer">
+
+        <div className="imageContainer ">
+          <h2 className="miniLogo ">Profile Picture</h2>
           <img
             className="driverPhoto"
             src={driver.photo}
@@ -66,25 +77,25 @@ const Driver = () => {
           />
         </div>
         <div className="review">
-          {" "}
+          <h2 className="miniLogo">Rating</h2>{" "}
           <AiFillStar
-            onClick={() => setRating(1)}
+            onClick={() => review(1)}
             className={rating > 0 && "check"}
           />
           <AiFillStar
-            onClick={() => setRating(2)}
+            onClick={() => review(2)}
             className={rating > 1 && "check"}
           />
           <AiFillStar
-            onClick={() => setRating(3)}
+            onClick={() => review(3)}
             className={rating > 2 && "check"}
           />
           <AiFillStar
-            onClick={() => setRating(4)}
+            onClick={() => review(4)}
             className={rating > 3 && "check"}
           />
           <AiFillStar
-            onClick={() => setRating(5)}
+            onClick={() => review(5)}
             className={rating > 4 && "check"}
           />
         </div>

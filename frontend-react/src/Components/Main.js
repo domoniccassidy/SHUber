@@ -34,6 +34,27 @@ const Main = () => {
     iconUrl: "/taxiIcon.png",
     iconSize: [24, 24],
   });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(AskPosition);
+    } else {
+    }
+  }, []);
+
+  useEffect(() => {
+    if (bookingStatus == "wait") {
+      setTimeout(taxiIsHere, 4000);
+    } else if (bookingStatus == "here") {
+      setTimeout(tripIsOver, 4000);
+    }
+  }, [bookingStatus]);
+  useEffect(() => {
+    if (!user) {
+      history.push("/");
+    }
+  }, [user]);
+
   const chooseDestination = (e) => {
     setDestination(e.latlng);
   };
@@ -59,25 +80,6 @@ const Main = () => {
     setDestination([0, 0]);
   };
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(AskPosition);
-    } else {
-    }
-  }, []);
-
-  useEffect(() => {
-    if (bookingStatus == "wait") {
-      setTimeout(taxiIsHere, 4000);
-    } else if (bookingStatus == "here") {
-      setTimeout(tripIsOver, 4000);
-    }
-  }, [bookingStatus]);
-  useEffect(() => {
-    if (!user) {
-      history.push("/");
-    }
-  }, [user]);
   const payment = () => {
     history.push("/payment");
   };
@@ -94,6 +96,24 @@ const Main = () => {
     return null;
   };
 
+  function Routing() {
+    const map = useMap();
+
+    useEffect(() => {
+      if (!map || !destination || !location || !destination.lat) return;
+      const routingControl = L.Routing.control({
+        waypoints: [location, [destination?.lat, destination?.lng]],
+        routeWhileDragging: true,
+        createMarker: function () {
+          return null;
+        },
+      }).addTo(map);
+
+      return () => map.removeControl(routingControl);
+    }, [map]);
+
+    return null;
+  }
   return (
     <>
       <div className={`${onScreen ? "onScreen" : "menu"}`}>
@@ -172,7 +192,6 @@ const Main = () => {
               zIndex: "0",
             }}
             center={location}
-            zoom={13}
             scrollWheelZoom={true}
           >
             <TileLayer
@@ -189,13 +208,18 @@ const Main = () => {
             {drivers &&
               drivers.map((driver) => {
                 return (
-                  <Marker position={driver.location} icon={taxiIcon}>
+                  <Marker
+                    key={driver.id}
+                    position={driver.location}
+                    icon={taxiIcon}
+                  >
                     <Popup offset={[0, -15]}>
                       <a>{driver.name}</a>
                     </Popup>
                   </Marker>
                 );
               })}
+            <Routing />
           </MapContainer>
         </div>
       </div>

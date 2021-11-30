@@ -342,6 +342,7 @@ div.ReactModal__Overlay.ReactModal__Overlay--after-open.slide-pane__overlay.some
   color: #ff7200;
 }
 .miniLogo {
+  color: #ff7200;
   width: 100%;
   text-align: center;
   font-size: 4vh;
@@ -392,10 +393,16 @@ li {
   margin-top: 12vh;
 }
 .check {
-  color: orange;
+  color: #ff7200;
 }
 .review {
   text-align: center;
+}
+.leaflet-routing-alt {
+  display: none;
+}
+.left {
+  text-align: left;
 }
 @media screen and (max-width: 500px) {
   .main {
