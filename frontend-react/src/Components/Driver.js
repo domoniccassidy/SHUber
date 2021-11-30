@@ -21,7 +21,7 @@ const Driver = () => {
 
   const [onScreen, setOnScreen] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-
+  const [colour, setColour] = useState(" ");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -36,6 +36,7 @@ const Driver = () => {
     dispatch({ type: "LOGOUT" });
   };
   const review = (rating) => {
+    setColour("orange");
     setRating(rating);
     dispatch(reviewDriver(driver._id, { ...user, rating: rating }));
   };
@@ -80,23 +81,23 @@ const Driver = () => {
           <h2 className="miniLogo">Rating</h2>{" "}
           <AiFillStar
             onClick={() => review(1)}
-            className={rating > 0 && "check"}
+            className={rating > 0 && `check ${colour}`}
           />
           <AiFillStar
             onClick={() => review(2)}
-            className={rating > 1 && "check"}
+            className={rating > 1 && `check ${colour}`}
           />
           <AiFillStar
             onClick={() => review(3)}
-            className={rating > 2 && "check"}
+            className={rating > 2 && `check ${colour}`}
           />
           <AiFillStar
             onClick={() => review(4)}
-            className={rating > 3 && "check"}
+            className={rating > 3 && `check ${colour}`}
           />
           <AiFillStar
             onClick={() => review(5)}
-            className={rating > 4 && "check"}
+            className={rating > 4 && `check ${colour}`}
           />
         </div>
       </div>

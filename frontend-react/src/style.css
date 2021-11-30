@@ -393,7 +393,10 @@ li {
   margin-top: 12vh;
 }
 .check {
-  color: #ff7200;
+  color: #fff;
+}
+.orange {
+  color: #ff7200 !important;
 }
 .review {
   text-align: center;

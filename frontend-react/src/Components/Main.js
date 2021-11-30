@@ -15,7 +15,6 @@ const Main = () => {
   const [error, setError] = useState("");
   const [destination, setDestination] = useState();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-
   const [drivers, setDrivers] = useState(
     JSON.parse(localStorage.getItem("drivers"))
   );
