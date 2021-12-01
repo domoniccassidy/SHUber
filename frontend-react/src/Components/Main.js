@@ -130,8 +130,6 @@ const Main = () => {
         <ul className="settings">
           <li>Home</li>
           <li onClick={payment}>Payment</li>
-          <li>Account</li>
-
           <li onClick={logout}>Log Out</li>
         </ul>
       </div>
