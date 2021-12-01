@@ -21,7 +21,7 @@ const Index = () => {
     if (user) {
       history.push("/main");
     }
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });

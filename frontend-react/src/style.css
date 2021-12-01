@@ -407,6 +407,11 @@ li {
 .left {
   text-align: left;
 }
+.driverVehicle{
+  text-align: center;
+  color: white;
+  font-family: arial;
+}
 @media screen and (max-width: 500px) {
   .main {
     min-height: 100vh;

@@ -9,8 +9,11 @@ export default (error = "", action) => {
     case "INVALID_PASSWORD":
       return "You have entered an incorrect password";
     case "PASSWORDS_NOT_MATCHING":
-      return "Your passwords do not match ";
+      return "Your passwords do not match"
+    case "CARD_ERROR":
+      return "Please provide your payment details before booking"
     case "CLEAR":
+      localStorage.setItem("user", JSON.stringify({ ...action?.data }));
       return "";
     default:
       return error;

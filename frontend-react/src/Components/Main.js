@@ -20,7 +20,7 @@ const Main = () => {
   );
 
   const cardError = useSelector((state) => state.errors);
-
+  console.log(cardError);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -42,7 +42,12 @@ const Main = () => {
     } else {
     }
   }, []);
-
+  useEffect(()=>{
+    setUser(JSON.parse(localStorage.getItem("user")))
+      if(cardError === ""){
+        setError("")
+      }
+  },[cardError])
   useEffect(() => {
     if (bookingStatus == "wait") {
       setTimeout(taxiIsHere, 4000);
@@ -61,8 +66,10 @@ const Main = () => {
   };
   const bookTaxi = () => {
     if (!destination) setError("You need to choose a destination to travel to");
-    else if (user?.cardVerified == false)
+    else if (user?.cardVerified == false){
       setError("Please provide your payment details before booking");
+      dispatch({type:"CARD_ERROR"});
+    }
     else {
       setBookingStatus("wait");
       setError("");

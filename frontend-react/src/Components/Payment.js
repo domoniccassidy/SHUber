@@ -138,7 +138,8 @@ export const MiniPayment = () => {
       setError("The cvv is not valid");
     } else {
       dispatch(verifyCard(user, history));
-      dispatch({ type: "CLEAR" });
+      const tempUser = {...user,cardVerified:true}
+      dispatch({ type: "CLEAR",data:tempUser});
     }
   };
   const handleChange = (e) => {

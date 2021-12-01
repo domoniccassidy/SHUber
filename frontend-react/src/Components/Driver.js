@@ -54,8 +54,6 @@ const Driver = () => {
         <ul className="settings">
           <li onClick={home}>Home</li>
           <li onClick={payment}>Payment</li>
-          <li>Account</li>
-
           <li onClick={logout}>Log Out</li>
         </ul>
       </div>
@@ -100,6 +98,7 @@ const Driver = () => {
             className={rating > 4 && `check ${colour}`}
           />
         </div>
+        <div className = "vehicle"><h2 className = "miniLogo">Vehcile</h2><h3>{driver.vehicle}</h3></div>
       </div>
     </>
   );
