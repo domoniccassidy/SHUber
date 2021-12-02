@@ -98,7 +98,10 @@ const Driver = () => {
             className={rating > 4 && `check ${colour}`}
           />
         </div>
-        <div className = "vehicle"><h2 className = "miniLogo">Vehcile</h2><h3>{driver.vehicle}</h3></div>
+        <div className="vehicle">
+          <h2 className="miniLogo">Vehcile</h2>
+          <h3 className="driverVehicle">{driver.vehicle}</h3>
+        </div>
       </div>
     </>
   );
