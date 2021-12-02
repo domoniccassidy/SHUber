@@ -14,3 +14,4 @@ Then, use npm install again
 Finally, run npm start.
 
 #How to access the app online
+Go to https://modest-lewin-5781e0.netlify.app
