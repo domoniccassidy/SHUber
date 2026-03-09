@@ -4,6 +4,20 @@ export const signIn = (userData, history) => async (dispatch) => {
   try {
     const { data } = await api.signIn(userData);
     dispatch({ type: "AUTH", data: data.user });
+
+    // Initialize Pendo with authenticated visitor data
+    if (window.pendo) {
+      window.pendo.initialize({
+        visitor: {
+          id: data.user._id,
+          email: data.user.email,
+          username: data.user.username,
+          emailVerified: data.user.emailVerified,
+          cardVerified: data.user.cardVerified,
+        },
+      });
+    }
+
     history.push("main");
   } catch (error) {
     if (userData.username == "" || userData.password == "") {
@@ -19,6 +33,20 @@ export const signUp = (userData, history) => async (dispatch) => {
   try {
     const { data } = await api.signUp(userData);
     dispatch({ type: "AUTH", data: data.user });
+
+    // Initialize Pendo with authenticated visitor data
+    if (window.pendo) {
+      window.pendo.initialize({
+        visitor: {
+          id: data.user._id,
+          email: data.user.email,
+          username: data.user.username,
+          emailVerified: data.user.emailVerified,
+          cardVerified: data.user.cardVerified,
+        },
+      });
+    }
+
     history.push("main");
   } catch (error) {
     if (
