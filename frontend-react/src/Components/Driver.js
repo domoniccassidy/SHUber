@@ -38,6 +38,12 @@ const Driver = () => {
   const review = (rating) => {
     setColour("orange");
     setRating(rating);
+    pendo.track("driver_reviewed", {
+      driver_id: driver._id,
+      driver_name: driver.name,
+      rating: rating,
+      reviewer_username: user?.username,
+    });
     dispatch(reviewDriver(driver._id, { ...user, rating: rating }));
   };
   useEffect(() => {
