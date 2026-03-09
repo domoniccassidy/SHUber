@@ -27,12 +27,28 @@ export const Payment = () => {
       userData.expiryDate == "" ||
       userData.cvv == ""
     ) {
+      pendo.track("payment_card_verification_failed", {
+        failure_reason: "empty_fields",
+        verification_source: "payment_page",
+      });
       setError("Please ensure that you fill in all of the forms");
     } else if (userData.cardNumber.length != 16 || isNaN(userData.cardNumber)) {
+      pendo.track("payment_card_verification_failed", {
+        failure_reason: "invalid_card_number",
+        verification_source: "payment_page",
+      });
       setError("The card number is not valid");
     } else if (userData.cvv.length !== 3 || isNaN(userData.cvv)) {
+      pendo.track("payment_card_verification_failed", {
+        failure_reason: "invalid_cvv",
+        verification_source: "payment_page",
+      });
       setError("The cvv is not valid");
     } else {
+      pendo.track("payment_card_verified", {
+        card_type: "standard",
+        verification_source: "payment_page",
+      });
       dispatch(verifyCard(user, history));
     }
   };
@@ -131,12 +147,28 @@ export const MiniPayment = () => {
       userData.expiryDate == "" ||
       userData.cvv == ""
     ) {
+      pendo.track("payment_card_verification_failed", {
+        failure_reason: "empty_fields",
+        verification_source: "mini_payment",
+      });
       setError("Please ensure that you fill in all of the forms");
     } else if (userData.cardNumber.length != 16 || isNaN(userData.cardNumber)) {
+      pendo.track("payment_card_verification_failed", {
+        failure_reason: "invalid_card_number",
+        verification_source: "mini_payment",
+      });
       setError("The card number is not valid");
     } else if (userData.cvv.length !== 3 || isNaN(userData.cvv)) {
+      pendo.track("payment_card_verification_failed", {
+        failure_reason: "invalid_cvv",
+        verification_source: "mini_payment",
+      });
       setError("The cvv is not valid");
     } else {
+      pendo.track("payment_card_verified", {
+        card_type: "standard",
+        verification_source: "mini_payment",
+      });
       dispatch(verifyCard(user, history));
       const tempUser = {...user,cardVerified:true}
       dispatch({ type: "CLEAR",data:tempUser});

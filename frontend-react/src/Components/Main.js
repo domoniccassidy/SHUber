@@ -63,14 +63,38 @@ const Main = () => {
 
   const chooseDestination = (e) => {
     setDestination(e.latlng);
+    pendo.track("destination_selected", {
+      destination_lat: e.latlng.lat,
+      destination_lng: e.latlng.lng,
+      user_lat: location[0],
+      user_lng: location[1],
+    });
   };
   const bookTaxi = () => {
-    if (!destination) setError("You need to choose a destination to travel to");
+    if (!destination) {
+      pendo.track("ride_booking_failed", {
+        failure_reason: "no_destination",
+        card_verified: String(user?.cardVerified),
+        destination_selected: false,
+      });
+      setError("You need to choose a destination to travel to");
+    }
     else if (user?.cardVerified == false){
+      pendo.track("ride_booking_failed", {
+        failure_reason: "card_not_verified",
+        card_verified: false,
+        destination_selected: true,
+      });
       setError("Please provide your payment details before booking");
       dispatch({type:"CARD_ERROR"});
     }
     else {
+      pendo.track("ride_booked", {
+        destination_lat: destination.lat,
+        destination_lng: destination.lng,
+        user_lat: location[0],
+        user_lng: location[1],
+      });
       setBookingStatus("wait");
       setError("");
     }
@@ -82,6 +106,12 @@ const Main = () => {
     setLocation([...location, location[0] + 0.00000000000001]);
   };
   const tripIsOver = () => {
+    pendo.track("ride_completed", {
+      destination_lat: destination.lat,
+      destination_lng: destination.lng,
+      driver_name: drivers[0]?.name,
+      driver_id: drivers[0]?._id,
+    });
     setBookingStatus("there");
     drivers[0].location = [destination.lat + 0.0005, destination.lng + 0.0005];
     setLocation([destination.lat, destination.lng]);
@@ -92,6 +122,10 @@ const Main = () => {
     history.push("/payment");
   };
   const logout = () => {
+    pendo.track("user_logged_out", {
+      username: user?.username,
+      logout_source: "main_page",
+    });
     setUser(null);
     dispatch({ type: "LOGOUT" });
   };
